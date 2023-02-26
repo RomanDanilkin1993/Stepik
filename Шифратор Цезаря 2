@@ -1,0 +1,30 @@
+list_upper_rus = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"]
+list_lower_rus = ["а", "б", "в", "г", "д", "е", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"]
+list_upper_eng = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+list_lower_eng = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+str = input()
+str_list = str.split(" ")
+for c in str_list:
+    c_list = []
+    a = len(c)
+    for i in range(len(c)):
+        c_list.append(c[i])
+    for j in range(len(c_list)):
+        if c_list[j] in '...,/"!&?':
+            b = c.count(c_list[j])
+        else:
+            b = 0
+    for j in range(len(c_list)):
+        if c_list[j] in list_upper_eng:
+            if list_upper_eng.index(c_list[j]) + a <= 25:
+                c_list[j] = list_upper_eng[list_upper_eng.index(c_list[j]) + a -b]
+            elif list_upper_eng.index(c_list[j]) + a > 25:
+                c_list[j] = list_upper_eng[list_upper_eng.index(c_list[j]) - 26 + a-b]
+        if c_list[j] in list_lower_eng:
+            if list_lower_eng.index(c_list[j]) + a <= 25:
+                c_list[j] = list_lower_eng[list_lower_eng.index(c_list[j]) + a-b]
+            elif list_lower_eng.index(c_list[j]) + a > 25:
+                c_list[j] = list_lower_eng[list_lower_eng.index(c_list[j]) - 26 + a-b]            
+    str_list[str_list.index(c)] = ''.join(c_list)
+print(*str_list)
