@@ -1,0 +1,96 @@
+# задаем списки
+list_upper_rus = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"]
+list_lower_rus = ["а", "б", "в", "г", "д", "е", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"]
+list_upper_eng = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+list_lower_eng = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+#спрашиваем направление
+print("Здравствуйте, это программа для шифрования/дешифрования текста. Укажите направшение шифр\дешифр")
+const = 1 
+while const == 1:
+    answer1 = input()
+    if answer1 == "шифр" or answer1 == "дешифр":
+        print("Принято!")
+        break
+    else:
+        print('Ошибка! Введите "шифр" или "дешифр"')
+        continue
+
+# спрашиваем язык
+print("Введите язык рус/англ")
+while const == 1:
+    answer2 = input()
+    if answer2 == "рус" or answer2 == "англ":
+        print("Принято!")
+        break
+    else:
+        print('Ошибка! Введите "рус" или "англ"')
+        continue    
+
+# спрашиваем шаг
+print("Укажите шаг шифрации (число)")
+while const == 1:
+    answer3 = input()
+    if answer3.isdigit() == True:
+        answer3 = int(answer3)
+        print("Принято!")
+        break
+    else:
+        print('Ошибка! Введите число!')
+        continue          
+print("Введите исходное значение предложения")
+sentence = input()
+list_sentence = []
+for c in sentence:
+    list_sentence.append(c)
+
+# кодируем шифрацию
+def code(answer2, answer3, list_sentence):
+    if answer2 == "англ":
+        for i in range(len(list_sentence)):
+            if list_sentence[i] in list_upper_eng:
+                if list_upper_eng.index(list_sentence[i]) + answer3 <= 25:
+                    list_sentence[i] = list_upper_eng[list_upper_eng.index(list_sentence[i]) + answer3]
+                elif list_upper_eng.index(list_sentence[i]) + answer3 > 25:
+                    list_sentence[i] = list_upper_eng[list_upper_eng.index(list_sentence[i]) - 26 + answer3]
+            if list_sentence[i] in list_lower_eng:
+                if list_lower_eng.index(list_sentence[i]) + answer3 <= 25:
+                    list_sentence[i] = list_lower_eng[list_lower_eng.index(list_sentence[i]) + answer3]
+                elif list_lower_eng.index(list_sentence[i]) + answer3 > 25:
+                    list_sentence[i] = list_lower_eng[list_lower_eng.index(list_sentence[i]) - 26 + answer3]
+        return "".join(list_sentence)
+    if answer2 == "рус":
+        for i in range(len(list_sentence)):
+            if list_sentence[i] in list_upper_rus:
+                if list_upper_rus.index(list_sentence[i]) + answer3 <= 25:
+                    list_sentence[i] = list_upper_rus[list_upper_rus.index(list_sentence[i]) + answer3]
+                elif list_upper_rus.index(list_sentence[i]) + answer3 > 25:
+                    list_sentence[i] = list_upper_rus[list_upper_rus.index(list_sentence[i]) - 32 + answer3]
+            if list_sentence[i] in list_lower_rus:
+                if list_lower_rus.index(list_sentence[i]) + answer3 <= 25:
+                    list_sentence[i] = list_lower_rus[list_lower_rus.index(list_sentence[i]) + answer3]
+                elif list_lower_rus.index(list_sentence[i]) + answer3 > 25:
+                    list_sentence[i] = list_lower_rus[list_lower_rus.index(list_sentence[i]) - 32 + answer3]
+        return "".join(list_sentence)        
+
+# кодируем дешифрацию
+def anti_code(answer2, answer3, list_sentence):
+    if answer2 == "англ":
+        for i in range(len(list_sentence)):
+            if list_sentence[i] in list_upper_eng:
+                    list_sentence[i] = list_upper_eng[list_upper_eng.index(list_sentence[i]) - answer3]
+            if list_sentence[i] in list_lower_eng:
+                    list_sentence[i] = list_lower_eng[list_lower_eng.index(list_sentence[i]) - answer3]
+        return "".join(list_sentence)
+    if answer2 == "рус":
+        for i in range(len(list_sentence)):
+            if list_sentence[i] in list_upper_rus:
+                    list_sentence[i] = list_upper_rus[list_upper_rus.index(list_sentence[i]) - answer3]
+            if list_sentence[i] in list_lower_rus:
+                    list_sentence[i] = list_lower_rus[list_lower_rus.index(list_sentence[i]) - answer3]
+        return "".join(list_sentence)       
+    
+if answer1 == "шифр":
+    print(code(answer2, answer3, list_sentence))
+if answer1 == "дешифр":
+    print(anti_code(answer2, answer3, list_sentence))
